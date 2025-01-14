@@ -1,9 +1,6 @@
 #include "Game.h"
-#include <assert.h>
 #include <algorithm>
 #include "GameStatePlaying.h"
-#include "GameStateGameOver.h"
-#include "GameStatePauseMenu.h"
 #include "GameStateMainMenu.h"
 #include "GameStateRecords.h"
 
@@ -14,11 +11,11 @@ namespace Arkanoid
 	{
 		recordsTable =
 		{
-			{"John", MAX_APPLES / 2},
-			{"Jane", MAX_APPLES / 3 },
-			{"Alice", MAX_APPLES / 4 },
-			{"Bob", MAX_APPLES / 5 },
-			{"Clementine", MAX_APPLES / 5 },
+			{"John", MAX_SCORE / 2},
+			{"Jane", MAX_SCORE / 3 },
+			{"Alice", MAX_SCORE / 4 },
+			{"Bob", MAX_SCORE / 5 },
+			{"Clementine", MAX_SCORE / 5 },
 		};
 
 		stateChangeType = GameStateChangeType::None;

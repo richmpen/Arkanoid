@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "GameSettings.h"
-#include "Plate.h"
+#include "Object.h"
+
 
 namespace Arkanoid {
 	
@@ -13,21 +13,19 @@ namespace Arkanoid {
 		Both
 	};
 
-	class Ball : public Object {
+	class Ball : public Object
+	{
 	public:
-
-		void Init();
-		void Update(float timeDelta, Plate& plate);
-		void Draw(sf::RenderWindow& window);
+		Ball(const sf::Vector2f& position);
+		virtual ~Ball();
+		void Update(float timeDelta) override;
 		void CalculatingTrajectory(float timeDelta);
-		auto GetSize() const { return size; }
 		void Turning(Turn directions);
+		void ChangeAngle(float angle);
+		void SetPositionOnPlate(const sf::Vector2f positionPlate);
 		
-
 	private:
-		bool gameStart = false;
-		float size = 50.f;
-		float speed = 500.0f;
 		sf::Vector2f dir;
+		float lastAngle = 90;
 	};
 }

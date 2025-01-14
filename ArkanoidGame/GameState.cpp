@@ -4,7 +4,8 @@
 #include "GameStatePauseMenu.h"
 #include "GameStateMainMenu.h"
 #include "GameStateRecords.h"
-
+#include "GameStateData.h"
+#include "GameStateGameWin.h"
 #include <assert.h>
 
 
@@ -18,223 +19,65 @@ namespace Arkanoid
 		{
 		case GameStateType::MainMenu:
 		{
-			data = new GameStateMainMenu();
-			((GameStateMainMenu*)data)->Init();
+			data = std::make_unique<GameStateMainMenu>();
 			break;
 		}
 		case GameStateType::Playing:
 		{
-			data = new GameStatePlaying();
-			((GameStatePlaying*)data)->Init();
+			data = std::make_unique<GameStatePlaying>();
 			break;
 		}
 		case GameStateType::GameOver:
 		{
-			data = new GameStateGameOver();
-			((GameStateGameOver*)data)->Init();
+			data = std::make_unique<GameStateGameOver>();
+			break;
+		}
+		case GameStateType::GameWin:
+		{
+			data = std::make_unique<GameStateGameWin>();
 			break;
 		}
 		case GameStateType::ExitDialog:
 		{
-			data = new GameStatePauseMenu();
-			((GameStatePauseMenu*)data)->Init();
+			data = std::make_unique<GameStatePauseMenu>();
 			break;
 		}
 		case GameStateType::Records:
 		{
-			data = new GameStateRecords();
-			((GameStateRecords*)data)->Init();
+			data = std::make_unique<GameStateRecords>();
 			break;
 		}
 		default:
 			assert(false);
 			break;
 		}
+		if (data) {
+			data->Init();
+		}
 	}
+
 
 	GameState::~GameState()
 	{
 		if (data) {
-			switch (type)
-			{
-			case GameStateType::MainMenu:
-			{
-				delete ((GameStateMainMenu*)data);
-				break;
-			}
-			case GameStateType::Playing:
-			{
-				delete ((GameStatePlaying*)data);
-				break;
-			}
-			case GameStateType::GameOver:
-			{
-				delete ((GameStateGameOver*)data);
-				break;
-			}
-			case GameStateType::ExitDialog:
-			{
-				delete ((GameStatePauseMenu*)data);
-				break;
-			}
-			case GameStateType::Records:
-			{
-				delete ((GameStateRecords*)data);
-				break;
-			}
-			default:
-				assert(false);
-				break;
-			}
- 			
 			data = nullptr;
 		}
 	}
 
 	void GameState::Update(float timeDelta)
 	{
-		switch (type)
-		{
-		case GameStateType::MainMenu:
-		{
-			((GameStateMainMenu*)data)->Update(timeDelta);
-			break;
-		}
-		case GameStateType::Playing:
-		{
-			((GameStatePlaying*)data)->Update(timeDelta);
-			break;
-		}
-		case GameStateType::GameOver:
-		{
-			((GameStateGameOver*)data)->Update(timeDelta);
-			break;
-		}
-		case GameStateType::ExitDialog:
-		{
-			((GameStatePauseMenu*)data)->Update(timeDelta);
-			break;
-		}
-		case GameStateType::Records:
-		{
-			((GameStateRecords*)data)->Update(timeDelta);
-			break;
-		}
-		default:
-			assert(false);
-			break;
-		}
+		data->Update(timeDelta);
 	}
 
 	void GameState::Draw(sf::RenderWindow& window)
 	{
-		switch (type)
-		{
-		case GameStateType::MainMenu:
-		{
-			((GameStateMainMenu*)data)->Draw(window);
-			break;
-		}
-		case GameStateType::Playing:
-		{
-			((GameStatePlaying*)data)->Draw(window);
-			break;
-		}
-		case GameStateType::GameOver:
-		{
-			((GameStateGameOver*)data)->Draw(window);
-			break;
-		}
-		case GameStateType::ExitDialog:
-		{
-			((GameStatePauseMenu*)data)->Draw(window);
-			break;
-		}
-		case GameStateType::Records:
-		{
-			((GameStateRecords*)data)->Draw(window);
-			break;
-		}
-		default:
-			assert(false);
-			break;
-		}
+		data->Draw(window);
 	}
 
 	void GameState::Control(sf::Event& event)
 	{
-		switch (type)
-		{
-		case GameStateType::MainMenu:
-		{
-			((GameStateMainMenu*)data)->Control(event);
-			break;
-		}
-		case GameStateType::Playing:
-		{
-			((GameStatePlaying*)data)->Control(event);
-			break;
-		}
-		case GameStateType::GameOver:
-		{
-			((GameStateGameOver*)data)->Control(event);
-			break;
-		}
-		case GameStateType::ExitDialog:
-		{
-			((GameStatePauseMenu*)data)->Control(event);
-			break;
-		}
-		case GameStateType::Records:
-		{
-			((GameStateRecords*)data)->Control(event);
-			break;
-		}
-		default:
-			assert(false);
-			break;
-		}
+		data->Control(event);
 	}
 
-	void* GameState::CopyData(const GameState& state) const
-	{
-		void* data = nullptr;
-		switch (state.type)
-		{
-		case GameStateType::MainMenu:
-		{
-			data = new GameStateMainMenu();
-			*((GameStateMainMenu*)data) = *(GameStateMainMenu*)state.data;
-			break;
-		}
-		case GameStateType::Playing:
-		{
-			data = new GameStatePlaying();
-			*((GameStatePlaying*)data) = *(GameStatePlaying*)state.data;
-			break;
-		}
-		case GameStateType::GameOver:
-		{
-			data = new GameStateGameOver();
-			*((GameStateGameOver*)data) = *(GameStateGameOver*)state.data;
-			break;
-		}
-		case GameStateType::ExitDialog:
-		{
-			data = new GameStatePauseMenu();
-			*((GameStatePauseMenu*)data) = *(GameStatePauseMenu*)state.data;
-			break;
-		}
-		case GameStateType::Records:
-		{
-			data = new GameStateRecords();
-			*((GameStateRecords*)data) = *(GameStateRecords*)state.data;
-			break;
-		}
-		default:
-			assert(false);
-			break;
-		}
-		return data;
-	}
+	
 }

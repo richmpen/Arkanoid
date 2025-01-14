@@ -2,60 +2,56 @@
 #include <assert.h>
 #include "GameSettings.h"
 #include "Sprite.h"
-#include "Object.h"
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "Plate.h"
 
 
 namespace Arkanoid {
-
-	void Ball::Init()
+	Ball::Ball(const sf::Vector2f& position) :
+	Object(TEXTURES_PATH + "Ball.png",position,BALL_SIZE,BALL_SIZE)
 	{
-		assert(texture.loadFromFile(TEXTURES_PATH + "Ball.png"));
 		texture.setSmooth(true);
-		InitSprite(sprite, size, size, texture);
 		const float angle = 225.f + rand() % 90;
 		const auto pi = std::acos(-1.f);
 		dir.x = std::cos(pi / 180.f * angle);
+		
 		dir.y = std::sin(pi / 180.f * angle);
-		
-	}
-	void Ball::Update(float timeDelta, Plate& plate)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		{
-			gameStart = true;
-		}
-		
-		if (gameStart) {
-			CalculatingTrajectory(timeDelta);
-		}
-		else {
-			sprite.setPosition(plate.GetPosition().x, plate.GetPosition().y - 75.f);
-
-		}
-		
 	}
 
-	void Ball::Draw(sf::RenderWindow& window)
+	Ball::~Ball()
 	{
-		window.draw(sprite);
+	}
+	
+	void Ball::Update(float timeDelta)
+	{
+		
 	}
 
 	void Ball::CalculatingTrajectory(float timeDelta)
 	{
-		auto position = sprite.getPosition() + speed * timeDelta * dir;
+		auto position = sprite.getPosition() + BALL_SPEED * timeDelta * dir;
+		
+		position.x = std::max(BALL_SIZE/2.f, std::min(position.x, SCREEN_WIDTH - BALL_SIZE/2.f));
+		position.y = std::max(BALL_SIZE/2.f, position.y);
+    
 		sprite.setPosition(position);
-		if (position.x-size/2 <= 0 || position.x+size/2 >= SCREEN_WIDTH) {
+    
+		if (position.x - BALL_SIZE/2 <= 0 || position.x + BALL_SIZE/2 >= SCREEN_WIDTH) {
 			Turning(Turn::X);
-			
 		}
 
-		if (position.y-size/2 <= 0) {
+		if (position.y - BALL_SIZE/2 <= 0) {
 			Turning(Turn::Y);
-			
 		}
+	}
+	
+	void Ball::ChangeAngle(float angle)
+	{
+		lastAngle = angle;
+		const auto pi = std::acos(-1.f);
+		dir.x = (angle / abs(angle)) * std::cos(pi / 180.f * angle);
+		dir.y = -1 * abs(std::sin(pi / 180.f * angle));
 	}
 	
 	void Ball::Turning(Turn directions)
@@ -72,5 +68,10 @@ namespace Arkanoid {
 			dir.y *= -1;
 			break;
 		}
+	}
+	
+	void Ball::SetPositionOnPlate(const sf::Vector2f positionPlate) 
+	{
+		sprite.setPosition(sf::Vector2f(positionPlate.x, positionPlate.y));
 	}
 }

@@ -4,6 +4,8 @@
 #include "Object.h"
 #include <array>
 
+#include "Colladiable.h"
+
 
 namespace Arkanoid
 {
@@ -13,18 +15,12 @@ namespace Arkanoid
 	{
 		public:
 		
-		void Init();
-		void Update(float timeDelta);
-		void Draw(sf::RenderWindow& window);
-		bool CollisionWithBall(const Ball& ball);
-
-		
+		Plate(const sf::Vector2f& position);
+		~Plate() =default;
+		void Update(float timeDelta)override;
+		bool CheckCollisionWithBall(const Ball& ball) const;
 
 		private:
-		
-		float width = 200.f;
-		float height = 50.f;
-		float speed = 10.0f;
-		float YPosition = SCREEN_HEIGHT-100.f;
+		float YPosition = SCREEN_HEIGHT - PLATE_HEIGHT / 2;
 	};
 }

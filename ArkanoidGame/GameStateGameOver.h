@@ -1,18 +1,19 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "GameStateData.h"
 
 namespace Arkanoid
 {
 	class Game;
 
-	class GameStateGameOver
+	class GameStateGameOver : public GameStateData
 	{
 	public:
-		void Init();
-		void Shutdown();
-		void Control(const sf::Event& event);
-		void Update(float timeDelta);
-		void Draw(sf::RenderWindow& window);
+		void Init() override;
+		void Shutdown() override;
+		void Control(const sf::Event& event) override;
+		void Update(float timeDelta) override;
+		void Draw(sf::RenderWindow& window) override;
 	private:
 		sf::Font font;
 

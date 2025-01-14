@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
-
+#include "GameStateData.h"
 
 namespace Arkanoid
 {
@@ -11,6 +11,7 @@ namespace Arkanoid
 		MainMenu,
 		Playing,
 		GameOver,
+		GameWin,
 		ExitDialog,
 		Records,
 	};
@@ -23,12 +24,12 @@ namespace Arkanoid
 		GameState(const GameState& state) = delete;
 		GameState(GameState&& state) { operator=(std::move(state)); }
 
-		~GameState();
+		virtual ~GameState();
 
 		GameState& operator= (const GameState& state) = delete;
 		GameState& operator= (GameState&& state) noexcept {
 			type = state.type;
-			data = state.data;
+			data = std::move(state.data);
 			isExclusivelyVisible = state.isExclusivelyVisible;
 			state.data = nullptr;
 			return *this;
@@ -46,12 +47,10 @@ namespace Arkanoid
 		void Draw(sf::RenderWindow& window);
 		void Control(sf::Event& event);
 
-	private:
-		void* CopyData(const GameState& state) const;
-
+	
 	private:
 		GameStateType type = GameStateType::None;
-		void* data = nullptr;
+		std::unique_ptr<GameStateData> data = nullptr;
 		bool isExclusivelyVisible = false;
 	};
 
