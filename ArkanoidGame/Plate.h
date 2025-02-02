@@ -3,7 +3,6 @@
 #include "GameSettings.h"
 #include "Object.h"
 #include <array>
-
 #include "Colladiable.h"
 
 
@@ -11,16 +10,17 @@ namespace Arkanoid
 {
 	class Ball;
 
-	class Plate : public Object
+	class Plate : public Object, public Colladiable
 	{
 		public:
 		
 		Plate(const sf::Vector2f& position);
 		~Plate() =default;
 		void Update(float timeDelta)override;
-		bool CheckCollisionWithBall(const Ball& ball) const;
-
+		bool GetCollision(std::shared_ptr<Colladiable> collidable) const override;
+		bool CheckCollision(std::shared_ptr<Colladiable> collidable) override;
 		private:
 		float YPosition = SCREEN_HEIGHT - PLATE_HEIGHT / 2;
+		void OnHit() override;
 	};
 }

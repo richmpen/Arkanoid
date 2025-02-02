@@ -20,6 +20,8 @@ namespace Arkanoid
 	const float BLOCK_SPACING_VERTICAL = 5.f;
 	const float BLOCK_WIDTH = (SCREEN_WIDTH - BLOCKS_COUNT_IN_ROW * BLOCK_SPACING_HORIZONTAL) / BLOCKS_COUNT_IN_ROW;
 	const float BLOCK_HEIGHT = 50.f;
+	const float BREAK_DELAY = 1.5f;
+	const int CRUMBLING_HEALTH = 3;
 	
 	const float BALL_SIZE = 50.f;
 	const float BALL_SPEED = 500.f;
@@ -27,8 +29,7 @@ namespace Arkanoid
 	const float PLATE_WIDTH = 200.f;
 	const float PLATE_HEIGHT = 50.f;
 	const float PLATE_SPEED = 10.0f;
-
-	const int MAX_SCORE = BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW - 2;
+	
 	const int MAX_RECORDS_TABLE_SIZE = 5;
 	extern const char* PLAYER_NAME;
 

@@ -3,7 +3,6 @@
 #include "SFML/Audio.hpp"
 #include "Plate.h"
 #include "Ball.h"
-#include "Block.h"
 #include "GameStateData.h"
 
 namespace Arkanoid
@@ -18,7 +17,7 @@ namespace Arkanoid
 		void Control(const sf::Event& event) override;
 		void Update(float timeDelta) override;
 		void Draw(sf::RenderWindow& window) override;
-
+		void GetBallInverse(const sf::Vector2f& ballPos, const sf::FloatRect& blockRect, bool& needInverseDirX, bool& needInverseDirY);
 		void BackgroundMove(float timeDelta);
 	private:
 		void SpawnBlocks();

@@ -38,14 +38,16 @@ namespace Arkanoid {
 	
 	};
 
-	bool Plate::CheckCollisionWithBall(const Ball& ball) const
+	bool Plate::GetCollision(std::shared_ptr<Colladiable> collidable) const
 	{
+		auto ball = std::dynamic_pointer_cast<Ball>(collidable);
+		if (!ball) return false;
 		auto sqr = [](float x) {
 			return x * x;
-			};
+		};
 
 		const auto rect = sprite.getGlobalBounds();
-		const auto ballPos = ball.GetPosition();
+		const auto ballPos = ball->GetPosition();
 		if (ballPos.x < rect.left) {
 			return sqr(ballPos.x - rect.left) + sqr(ballPos.y - rect.top) < sqr(BALL_SIZE / 2.0);
 		}
@@ -57,5 +59,23 @@ namespace Arkanoid {
 		return std::fabs(ballPos.y - rect.top) <= BALL_SIZE / 2.0;
 	}
 
+	bool Plate::CheckCollision(std::shared_ptr<Colladiable> collidable)
+	{
+		auto ball = std::dynamic_pointer_cast<Ball>(collidable);
+		if (!ball) return false;
+		if (GetCollision(ball))
+		{
+			auto rect = GetRect();
+			auto ballPosOnPlate = (ball->GetPosition().x - (rect.left + rect.width / 2.0)) / rect.width;
+			ball->ChangeAngle(90-20*ballPosOnPlate);
+			return true;
+		}
+		return false;
+	}
+
+	void Plate::OnHit()
+	{
+	}
 }
+
 

@@ -5,7 +5,7 @@
 #include "SFML/Graphics.hpp"
 #include <iostream>
 #include "Plate.h"
-
+#include <random>
 
 namespace Arkanoid {
 	Ball::Ball(const sf::Vector2f& position) :
@@ -19,9 +19,6 @@ namespace Arkanoid {
 		dir.y = std::sin(pi / 180.f * angle);
 	}
 
-	Ball::~Ball()
-	{
-	}
 	
 	void Ball::Update(float timeDelta)
 	{
@@ -73,5 +70,18 @@ namespace Arkanoid {
 	void Ball::SetPositionOnPlate(const sf::Vector2f positionPlate) 
 	{
 		sprite.setPosition(sf::Vector2f(positionPlate.x, positionPlate.y));
+	}
+
+	bool Ball::GetCollision(std::shared_ptr<Colladiable> collidable) const
+	{
+		auto gameObject = std::dynamic_pointer_cast<Object>(collidable);
+		assert(gameObject != nullptr);
+		return GetRect().intersects(gameObject->GetRect());
+	}
+
+	void Ball::OnHit()
+	{
+		lastAngle += -5 + std::rand() % 11;
+		ChangeAngle(lastAngle);
 	}
 }

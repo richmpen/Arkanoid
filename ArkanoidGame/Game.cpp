@@ -11,11 +11,11 @@ namespace Arkanoid
 	{
 		recordsTable =
 		{
-			{"John", MAX_SCORE / 2},
-			{"Jane", MAX_SCORE / 3 },
-			{"Alice", MAX_SCORE / 4 },
-			{"Bob", MAX_SCORE / 5 },
-			{"Clementine", MAX_SCORE / 5 },
+			{"John", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 2},
+			{"Jane", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 3 },
+			{"Alice", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 4 },
+			{"Bob", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 5 },
+			{"Clementine", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 5 },
 		};
 
 		stateChangeType = GameStateChangeType::None;
