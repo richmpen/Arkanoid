@@ -11,7 +11,7 @@ namespace Arkanoid
 
 	void GameStateGameWin::Init()
 	{
-		assert(font.loadFromFile(RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
+		assert(font.loadFromFile(SETTINGS.RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
 
 		timeSinceGameWin = 0.f;
 
@@ -25,7 +25,7 @@ namespace Arkanoid
 		gameWinText.setFillColor(sf::Color::Green);
 		gameWinText.setString("Game Win!");
 
-		recordsTableTexts.reserve(MAX_RECORDS_TABLE_SIZE);
+		recordsTableTexts.reserve(SETTINGS.MAX_RECORDS_TABLE_SIZE);
 
 		std::multimap<int, std::string> sortedRecordsTable;
 		Game& game = Application::Instance().GetGame();
@@ -36,7 +36,7 @@ namespace Arkanoid
 
 		bool isSnakeInTable = false;
 		auto it = sortedRecordsTable.rbegin();
-		for (int i = 0; i < MAX_RECORDS_TABLE_SIZE && it != sortedRecordsTable.rend(); ++i, ++it)
+		for (int i = 0; i < SETTINGS.MAX_RECORDS_TABLE_SIZE && it != sortedRecordsTable.rend(); ++i, ++it)
 		{
 			recordsTableTexts.emplace_back();
 			sf::Text& text = recordsTableTexts.back();
@@ -46,7 +46,7 @@ namespace Arkanoid
 			text.setString(sstream.str());
 			text.setFont(font);
 			text.setCharacterSize(24);
-			if (it->second == PLAYER_NAME)
+			if (it->second == SETTINGS.PLAYER_NAME)
 			{
 				text.setFillColor(sf::Color::Green);
 				isSnakeInTable = true;
@@ -61,8 +61,8 @@ namespace Arkanoid
 		{
 			sf::Text& text = recordsTableTexts.back();
 			std::stringstream sstream;
-			int snakeScores = game.GetRecordByPlayerId(PLAYER_NAME);
-			sstream << MAX_RECORDS_TABLE_SIZE << ". " << PLAYER_NAME << ": " << snakeScores;
+			int snakeScores = game.GetRecordByPlayerId(SETTINGS.PLAYER_NAME);
+			sstream << SETTINGS.MAX_RECORDS_TABLE_SIZE << ". " << SETTINGS.PLAYER_NAME << ": " << snakeScores;
 			text.setString(sstream.str());
 			text.setFillColor(sf::Color::Green);
 		}
@@ -78,7 +78,7 @@ namespace Arkanoid
 		exitItem.text.setFont(font);
 		exitItem.text.setCharacterSize(32);
 		exitItem.onPressCallback = [](MenuItem&) {
-			Application::Instance().GetGame().SwitchStateTo(GameStateType::MainMenu);
+			Application::Instance().GetGame().StartGame();
 			};
 
 		MenuItem restartItem;
@@ -86,7 +86,7 @@ namespace Arkanoid
 		restartItem.text.setFont(font);
 		restartItem.text.setCharacterSize(32);
 		restartItem.onPressCallback = [](MenuItem&) {
-			Application::Instance().GetGame().SwitchStateTo(GameStateType::Playing);
+			Application::Instance().GetGame().ExitGame();
 			};
 
 		MenuItem WinMenu;

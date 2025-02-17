@@ -58,6 +58,18 @@
     <ClCompile Include="Block.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="BlockFactory.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Colladiable.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IDelayedAction.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -105,5 +117,17 @@
     <ClInclude Include="Block.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="BlockFactory.h" />
+    <ClInclude Include="Colladiable.h" />
+    <ClInclude Include="IDelayedAction.h" />
+    <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="IObserver.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\levels.config">
+      <Filter>Sources</Filter>
+    </None>
   </ItemGroup>
 </Project>

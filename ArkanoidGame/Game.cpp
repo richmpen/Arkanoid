@@ -3,6 +3,7 @@
 #include "GameStatePlaying.h"
 #include "GameStateMainMenu.h"
 #include "GameStateRecords.h"
+#include <assert.h>
 
 namespace Arkanoid
 {
@@ -11,11 +12,11 @@ namespace Arkanoid
 	{
 		recordsTable =
 		{
-			{"John", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 2},
-			{"Jane", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 3 },
-			{"Alice", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 4 },
-			{"Bob", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 5 },
-			{"Clementine", BLOCKS_COUNT_ROWS*BLOCKS_COUNT_IN_ROW / 5 },
+			{"John", SETTINGS.BLOCKS_COUNT_ROWS*SETTINGS.BLOCKS_COUNT_IN_ROW / 2},
+			{"Jane", SETTINGS.BLOCKS_COUNT_ROWS*SETTINGS.BLOCKS_COUNT_IN_ROW / 3 },
+			{"Alice", SETTINGS.BLOCKS_COUNT_ROWS*SETTINGS.BLOCKS_COUNT_IN_ROW / 4 },
+			{"Bob", SETTINGS.BLOCKS_COUNT_ROWS*SETTINGS.BLOCKS_COUNT_IN_ROW / 5 },
+			{"Clementine", SETTINGS.BLOCKS_COUNT_ROWS*SETTINGS.BLOCKS_COUNT_IN_ROW / 5 },
 		};
 
 		stateChangeType = GameStateChangeType::None;
@@ -160,5 +161,57 @@ namespace Arkanoid
 	void Game::UpdateRecord(const std::string& playerId, int score)
 	{
 		recordsTable[playerId] = std::max(recordsTable[playerId], score);
+	}
+
+
+
+	void Game::StartGame()
+	{
+		SwitchStateTo(GameStateType::Playing);
+	}
+	void Game::PauseGame()
+	{
+		PushState(GameStateType::ExitDialog, false);
+	}
+	void Game::ExitGame()
+	{
+		SwitchStateTo(GameStateType::MainMenu);
+	}
+	void Game::ShowRecords()
+	{
+		PushState(GameStateType::Records, true);
+	}
+	void Game::QuitGame() {
+		SwitchStateTo(GameStateType::None);
+	}
+	void Game::WinGame()
+	{
+		PushState(GameStateType::GameWin, false);
+	}
+	void Game::LooseGame()
+	{
+		PushState(GameStateType::GameOver, false);
+	}
+	void Game::UpdateGame(float timeDelta, sf::RenderWindow& window)
+	{
+		Control(window);
+		if (Update(SETTINGS.TIME_PER_FRAME))
+		{
+			window.clear();
+
+			Draw(window);
+
+			window.display();
+		}
+		else
+		{
+			window.close();
+		}
+	}
+	void Game::LoadNextLevel()
+	{
+		assert(stateStack.back().GetType() == GameStateType::Playing);
+		auto playingData = (stateStack.back().GetData<GameStatePlaying>());
+		playingData->LoadNextLevel();
 	}
 }

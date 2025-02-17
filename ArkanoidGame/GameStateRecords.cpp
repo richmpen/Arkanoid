@@ -10,14 +10,14 @@ namespace Arkanoid
 {
 	void GameStateRecords::Init()
 	{
-		assert(font.loadFromFile(RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
+		assert(font.loadFromFile(SETTINGS.RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
 
 		titleText.setString("RECORDS");
 		titleText.setFont(font);
 		titleText.setFillColor(sf::Color::Red);
 		titleText.setCharacterSize(48);
 
-		tableTexts.reserve(MAX_RECORDS_TABLE_SIZE);
+		tableTexts.reserve(SETTINGS.MAX_RECORDS_TABLE_SIZE);
 
 		const Game& game = Application::Instance().GetGame();
 		std::map<int, std::string> sortedRecordsTable;
@@ -27,7 +27,7 @@ namespace Arkanoid
 		}
 
 		auto it = sortedRecordsTable.rbegin();
-		for (int i = 0; i < MAX_RECORDS_TABLE_SIZE && it != sortedRecordsTable.rend(); ++i, ++it)
+		for (int i = 0; i < SETTINGS.MAX_RECORDS_TABLE_SIZE && it != sortedRecordsTable.rend(); ++i, ++it)
 		{
 			tableTexts.emplace_back();
 			sf::Text& text = tableTexts.back();

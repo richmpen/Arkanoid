@@ -7,7 +7,7 @@
 
 namespace Arkanoid {
 
-	Plate::Plate(const sf::Vector2f& position):Object(TEXTURES_PATH + "Plate.png",position,PLATE_WIDTH,PLATE_HEIGHT)
+	Plate::Plate(const sf::Vector2f& position):Object(SETTINGS.TEXTURES_PATH + "Plate.png",position,SETTINGS.PLATE_WIDTH,SETTINGS.PLATE_HEIGHT)
 	{
 		texture.setSmooth(true);
 		sprite.setPosition(position);
@@ -18,18 +18,18 @@ namespace Arkanoid {
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			sprite.setPosition(sprite.getPosition().x + PLATE_SPEED, YPosition);
+			sprite.setPosition(sprite.getPosition().x + SETTINGS.PLATE_SPEED, YPosition);
 			
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			sprite.setPosition(sprite.getPosition().x - PLATE_SPEED, YPosition);
+			sprite.setPosition(sprite.getPosition().x - SETTINGS.PLATE_SPEED, YPosition);
 			
 		}
 
-		if (sprite.getGlobalBounds().left + PLATE_WIDTH >= SCREEN_WIDTH)
+		if (sprite.getGlobalBounds().left + SETTINGS.PLATE_WIDTH >= SETTINGS.SCREEN_WIDTH)
 		{
-			sprite.setPosition(SCREEN_WIDTH-sprite.getGlobalBounds().width/2, YPosition);
+			sprite.setPosition(SETTINGS.SCREEN_WIDTH-sprite.getGlobalBounds().width/2, YPosition);
 		}
 		else if (sprite.getGlobalBounds().left<= 0)
 		{
@@ -49,14 +49,14 @@ namespace Arkanoid {
 		const auto rect = sprite.getGlobalBounds();
 		const auto ballPos = ball->GetPosition();
 		if (ballPos.x < rect.left) {
-			return sqr(ballPos.x - rect.left) + sqr(ballPos.y - rect.top) < sqr(BALL_SIZE / 2.0);
+			return sqr(ballPos.x - rect.left) + sqr(ballPos.y - rect.top) < sqr(SETTINGS.BALL_SIZE / 2.0);
 		}
 
 		if (ballPos.x > rect.left + rect.width) {
-			return sqr(ballPos.x - rect.left - rect.width) + sqr(ballPos.y - rect.top) < sqr(BALL_SIZE / 2.0);
+			return sqr(ballPos.x - rect.left - rect.width) + sqr(ballPos.y - rect.top) < sqr(SETTINGS.BALL_SIZE / 2.0);
 		}
 
-		return std::fabs(ballPos.y - rect.top) <= BALL_SIZE / 2.0;
+		return std::fabs(ballPos.y - rect.top) <= SETTINGS.BALL_SIZE / 2.0;
 	}
 
 	bool Plate::CheckCollision(std::shared_ptr<Colladiable> collidable)

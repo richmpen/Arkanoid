@@ -1,14 +1,13 @@
 #pragma once
 #include <queue>
-#include <set>
-
 #include "Colladiable.h"
 #include "Object.h"
 #include "IDelayedAction.h"
+#include "IObserver.h"
 
 namespace Arkanoid {
 	class Ball;
-	class Block : public Object, public Colladiable
+	class Block : public Object, public Colladiable, public IObservable
 	{
 	protected:	
 		void OnHit() override;
@@ -31,6 +30,7 @@ namespace Arkanoid {
 		~SmoothDestroyableBlock() = default;
 		void Update(float timeDelta) override;
 		bool GetCollision(std::shared_ptr<Colladiable> collidable) const override;
+		bool isDestroyed();
 		void FinalAction() override;
 		void EachTickAction(float deltaTime) override;
 		private:
@@ -49,17 +49,18 @@ namespace Arkanoid {
 		}
 	};
 
-	class CrumblingBlock : public Block
+	class ThreeHitBlock : public Block
 	{
 		protected:
 		void OnHit() override;
 		public:
 		
-		CrumblingBlock(const std::string& texturePath, const sf::Vector2f& position);
-		~CrumblingBlock() = default;
+		ThreeHitBlock(const std::string& texturePath, const sf::Vector2f& position);
+		~ThreeHitBlock() = default;
 		void Update(float timeDelta) override;
 		bool GetCollision(std::shared_ptr<Colladiable> collidableObject) const override;
 		void SwitchBlockTexture();
+		bool isDestroyed();
 		private:
 		std::queue<sf::Texture> DestroyTextures;
 		sf::Texture brokenTexture;

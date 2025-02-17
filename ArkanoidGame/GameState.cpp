@@ -19,32 +19,32 @@ namespace Arkanoid
 		{
 		case GameStateType::MainMenu:
 		{
-			data = std::make_unique<GameStateMainMenu>();
+			data = std::make_shared<GameStateMainMenu>();
 			break;
 		}
 		case GameStateType::Playing:
 		{
-			data = std::make_unique<GameStatePlaying>();
+			data = std::make_shared<GameStatePlaying>();
 			break;
 		}
 		case GameStateType::GameOver:
 		{
-			data = std::make_unique<GameStateGameOver>();
+			data = std::make_shared<GameStateGameOver>();
 			break;
 		}
 		case GameStateType::GameWin:
 		{
-			data = std::make_unique<GameStateGameWin>();
+			data = std::make_shared<GameStateGameWin>();
 			break;
 		}
 		case GameStateType::ExitDialog:
 		{
-			data = std::make_unique<GameStatePauseMenu>();
+			data = std::make_shared<GameStatePauseMenu>();
 			break;
 		}
 		case GameStateType::Records:
 		{
-			data = std::make_unique<GameStateRecords>();
+			data = std::make_shared<GameStateRecords>();
 			break;
 		}
 		default:

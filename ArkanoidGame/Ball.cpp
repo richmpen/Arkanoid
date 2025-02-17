@@ -9,7 +9,7 @@
 
 namespace Arkanoid {
 	Ball::Ball(const sf::Vector2f& position) :
-	Object(TEXTURES_PATH + "Ball.png",position,BALL_SIZE,BALL_SIZE)
+	Object(SETTINGS.TEXTURES_PATH + "Ball.png",position,SETTINGS.BALL_SIZE,SETTINGS.BALL_SIZE)
 	{
 		texture.setSmooth(true);
 		const float angle = 225.f + rand() % 90;
@@ -22,25 +22,23 @@ namespace Arkanoid {
 	
 	void Ball::Update(float timeDelta)
 	{
-		
-	}
 
-	void Ball::CalculatingTrajectory(float timeDelta)
-	{
-		auto position = sprite.getPosition() + BALL_SPEED * timeDelta * dir;
-		
-		position.x = std::max(BALL_SIZE/2.f, std::min(position.x, SCREEN_WIDTH - BALL_SIZE/2.f));
-		position.y = std::max(BALL_SIZE/2.f, position.y);
-    
+		auto position = sprite.getPosition() + SETTINGS.BALL_SPEED * timeDelta * dir;
+
+		position.x = std::max(SETTINGS.BALL_SIZE / 2.f, std::min(position.x, SETTINGS.SCREEN_WIDTH - SETTINGS.BALL_SIZE / 2.f));
+		position.y = std::max(SETTINGS.BALL_SIZE / 2.f, position.y);
+
 		sprite.setPosition(position);
-    
-		if (position.x - BALL_SIZE/2 <= 0 || position.x + BALL_SIZE/2 >= SCREEN_WIDTH) {
+
+		if (position.x - SETTINGS.BALL_SIZE / 2 <= 0 || position.x + SETTINGS.BALL_SIZE / 2 >= SETTINGS.SCREEN_WIDTH) {
 			Turning(Turn::X);
 		}
 
-		if (position.y - BALL_SIZE/2 <= 0) {
+		if (position.y - SETTINGS.BALL_SIZE / 2 <= 0) {
 			Turning(Turn::Y);
 		}
+
+		Emit();
 	}
 	
 	void Ball::ChangeAngle(float angle)
@@ -83,5 +81,14 @@ namespace Arkanoid {
 	{
 		lastAngle += -5 + std::rand() % 11;
 		ChangeAngle(lastAngle);
+	}
+
+	void Ball::restart()
+	{
+		Object::restart();
+		const float angle = 90;
+		const auto pi = std::acos(-1.f);
+		dir.x = std::cos(pi / 180.f * angle);
+		dir.y = std::sin(pi / 180.f * angle);
 	}
 }

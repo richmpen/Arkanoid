@@ -124,6 +124,7 @@
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\SFML\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,10 +162,12 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockFactory.cpp" />
     <ClCompile Include="Colladiable.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateGameWin.cpp" />
     <ClCompile Include="IDelayedAction.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -182,11 +185,14 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockFactory.h" />
     <ClInclude Include="Colladiable.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateData.h" />
     <ClInclude Include="GameStateGameWin.h" />
     <ClInclude Include="IDelayedAction.h" />
+    <ClInclude Include="IObserver.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Game.h" />
@@ -200,6 +206,9 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="Plate.h" />
     <ClInclude Include="Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\levels.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

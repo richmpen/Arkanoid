@@ -1,5 +1,4 @@
 #pragma once
-
 #include "SFML/Graphics.hpp"
 
 namespace Arkanoid {
@@ -14,9 +13,10 @@ namespace Arkanoid {
 		
 		const sf::Vector2f& GetPosition() const { return sprite.getPosition(); }
 		sf::FloatRect GetRect() const { return sprite.getGlobalBounds(); }
-	
+		virtual void restart();
 	protected:
 		sf::Sprite sprite;
 		sf::Texture texture;
+		const sf::Vector2f startPosition;
 	};
 }

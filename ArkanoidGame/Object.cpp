@@ -4,7 +4,8 @@
 #include "SFML/Graphics.hpp"
 
 namespace Arkanoid {
-	Object::Object(const std::string& texturePath, const sf::Vector2f& position, float width, float height)
+	Object::Object(const std::string& texturePath, const sf::Vector2f& position, float width, float height) :
+		startPosition(position)
 	{
 		assert(texture.loadFromFile(texturePath));
 		InitSprite(sprite,width,height,texture);
@@ -14,5 +15,10 @@ namespace Arkanoid {
 	void Object::Draw(sf::RenderWindow& window)
 	{
 		DrawSprite(sprite, window);
+	}
+
+	void Object::restart()
+	{
+		sprite.setPosition(startPosition);
 	}
 }

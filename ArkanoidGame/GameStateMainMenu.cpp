@@ -7,17 +7,17 @@ namespace Arkanoid
 {
 	void GameStateMainMenu::Init()
 	{
-		assert(font.loadFromFile(RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
-		assert(backgroundTexture.loadFromFile(TEXTURES_PATH + "main-menu-Bg.png"));
-		InitSprite(background, SCREEN_WIDTH,SCREEN_HEIGHT, backgroundTexture);
-		background.setPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		assert(font.loadFromFile(SETTINGS.RESOURCES_PATH + "Fonts/Alata-Regular.ttf"));
+		assert(backgroundTexture.loadFromFile(SETTINGS.TEXTURES_PATH + "main-menu-Bg.png"));
+		InitSprite(background, SETTINGS.SCREEN_WIDTH,SETTINGS.SCREEN_HEIGHT, backgroundTexture);
+		background.setPosition(SETTINGS.SCREEN_WIDTH / 2, SETTINGS.SCREEN_HEIGHT / 2);
 		
 		MenuItem startGame;
 		startGame.text.setString("Start Game");
 		startGame.text.setFont(font);
 		startGame.text.setCharacterSize(32);
 		startGame.onPressCallback = [](MenuItem&) {
-			Application::Instance().GetGame().SwitchStateTo(GameStateType::Playing);
+			Application::Instance().GetGame().StartGame();
 			};
 		
 		const bool isInfiniteApples = Application::Instance().GetGame().IsEnableOptions(GameOptions::InfiniteApples);
@@ -63,7 +63,7 @@ namespace Arkanoid
 		recordsItem.text.setFont(font);
 		recordsItem.text.setCharacterSize(32);
 		recordsItem.onPressCallback = [](MenuItem&) {
-			Application::Instance().GetGame().PushState(GameStateType::Records, true);
+			Application::Instance().GetGame().ShowRecords();
 			};
 
 		MenuItem yesItem;
@@ -71,7 +71,7 @@ namespace Arkanoid
 		yesItem.text.setFont(font);
 		yesItem.text.setCharacterSize(32);
 		yesItem.onPressCallback = [](MenuItem&) {
-			Application::Instance().GetGame().SwitchStateTo(GameStateType::None);
+			Application::Instance().GetGame().QuitGame();
 			};
 
 		MenuItem noItem;

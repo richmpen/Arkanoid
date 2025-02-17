@@ -20,7 +20,7 @@ namespace Arkanoid
 		bool GetCollision(std::shared_ptr<Colladiable> collidable) const override;
 		bool CheckCollision(std::shared_ptr<Colladiable> collidable) override;
 		private:
-		float YPosition = SCREEN_HEIGHT - PLATE_HEIGHT / 2;
+		float YPosition = SETTINGS.SCREEN_HEIGHT - SETTINGS.PLATE_HEIGHT / 2;
 		void OnHit() override;
 	};
 }
